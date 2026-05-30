@@ -8,9 +8,6 @@ class Building;
 class Character;
 struct TurnNode;
 
-/*
- * Character
- */
 class Character {
 protected:
     string name;
@@ -23,6 +20,9 @@ protected:
     bool alive;
 
 public:
+    bool killedThisTurn;
+    bool isLowestHP_Enemies;
+
     Character();
     Character(string name, int hp, int atk, int def, int speed, int energy);
     virtual ~Character();
@@ -41,15 +41,23 @@ public:
     int getHP() const;
     int getEnergy() const;
 
+    int getMaxHP() const { return maxHp; }
+    void setHP(int h) { hp = h; if(hp <= 0) alive = false; }
+    void setAlive(bool a) { alive = a; }
+    void setEnergy(int e) { energy = e; }
+    int getAtk() const { return atk; }
+    void setAtk(int a) { atk = a; }
+    int getDef() const { return def; }
+    void setDef(int d) { def = d; }
+    int getSpeed() const { return speed; }
+    void setSpeed(int s) { speed = s; }
+
     virtual bool isStrawHat() const;
     virtual bool isCP9() const;
 
     virtual string str() const = 0;
 };
 
-/*
- * StrawHat
- */
 class StrawHat : public Character {
 protected:
     long long bounty;
@@ -63,109 +71,76 @@ public:
     virtual string str() const;
 };
 
-/*
- * Straw Hat members
- */
 class Luffy : public StrawHat {
 public:
-    Luffy(string name, int hp, int atk, int def,
-          int speed, int energy, long long bounty);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-
-    int attack(Building* target, BattleContext& context);
-    int specialSkill(Building* target, BattleContext& context);
-
-    void endTurn(BattleContext& context);
+    Luffy(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    int attack(Building* target, BattleContext& context) override;
+    int specialSkill(Building* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
 class Zoro : public StrawHat {
 public:
-    Zoro(string name, int hp, int atk, int def,
-         int speed, int energy, long long bounty);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-
-    int attack(Building* target, BattleContext& context);
-    int specialSkill(Building* target, BattleContext& context);
-
-    void endTurn(BattleContext& context);
+    Zoro(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    int attack(Building* target, BattleContext& context) override;
+    int specialSkill(Building* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
 class Sanji : public StrawHat {
 public:
-    Sanji(string name, int hp, int atk, int def,
-          int speed, int energy, long long bounty);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-
-    int attack(Building* target, BattleContext& context);
-    int specialSkill(Building* target, BattleContext& context);
-
-    void endTurn(BattleContext& context);
+    Sanji(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    int attack(Building* target, BattleContext& context) override;
+    int specialSkill(Building* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
 class Nami : public StrawHat {
 public:
-    Nami(string name, int hp, int atk, int def,
-         int speed, int energy, long long bounty);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-
-    int attack(Building* target, BattleContext& context);
-    int specialSkill(Building* target, BattleContext& context);
-
-    void endTurn(BattleContext& context);
+    Nami(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    int attack(Building* target, BattleContext& context) override;
+    int specialSkill(Building* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
 class Chopper : public StrawHat {
 public:
-    Chopper(string name, int hp, int atk, int def,
-            int speed, int energy, long long bounty);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-
-    int attack(Building* target, BattleContext& context);
-
-    void endTurn(BattleContext& context);
+    Chopper(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    int attack(Building* target, BattleContext& context) override;
+    int specialSkill(Building* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
 class Usopp : public StrawHat {
 public:
-    Usopp(string name, int hp, int atk, int def,
-          int speed, int energy, long long bounty);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-
-    int attack(Building* target, BattleContext& context);
-    int specialSkill(Building* target, BattleContext& context);
-
-    void endTurn(BattleContext& context);
+    Usopp(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    int attack(Building* target, BattleContext& context) override;
+    int specialSkill(Building* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
 class Franky : public StrawHat {
 public:
-    Franky(string name, int hp, int atk, int def,
-           int speed, int energy, long long bounty);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-
-    int attack(Building* target, BattleContext& context);
-    int specialSkill(Building* target, BattleContext& context);
-
-    void endTurn(BattleContext& context);
+    Franky(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    int attack(Building* target, BattleContext& context) override;
+    int specialSkill(Building* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
-/*
- * CP9Agent
- */
 class CP9Agent : public Character {
 protected:
     int doriki;
@@ -179,82 +154,62 @@ public:
     virtual string str() const;
 };
 
-/*
- * CP9 members
- */
 class Lucci : public CP9Agent {
 public:
-    Lucci(string name, int hp, int atk, int def,
-          int speed, int energy, int doriki);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-    void endTurn(BattleContext& context);
+    Lucci(string name, int hp, int atk, int def, int speed, int energy, int doriki);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
 class Kaku : public CP9Agent {
 public:
-    Kaku(string name, int hp, int atk, int def,
-         int speed, int energy, int doriki);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-    void endTurn(BattleContext& context);
+    Kaku(string name, int hp, int atk, int def, int speed, int energy, int doriki);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
 class Jabra : public CP9Agent {
 public:
-    Jabra(string name, int hp, int atk, int def,
-          int speed, int energy, int doriki);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-    void endTurn(BattleContext& context);
+    Jabra(string name, int hp, int atk, int def, int speed, int energy, int doriki);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
 class Blueno : public CP9Agent {
 public:
-    Blueno(string name, int hp, int atk, int def,
-           int speed, int energy, int doriki);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-    void endTurn(BattleContext& context);
+    Blueno(string name, int hp, int atk, int def, int speed, int energy, int doriki);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
 class Kalifa : public CP9Agent {
 public:
-    Kalifa(string name, int hp, int atk, int def,
-           int speed, int energy, int doriki);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-    void endTurn(BattleContext& context);
+    Kalifa(string name, int hp, int atk, int def, int speed, int energy, int doriki);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
 class Kumadori : public CP9Agent {
 public:
-    Kumadori(string name, int hp, int atk, int def,
-             int speed, int energy, int doriki);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-    void endTurn(BattleContext& context);
+    Kumadori(string name, int hp, int atk, int def, int speed, int energy, int doriki);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
 class Fukurou : public CP9Agent {
 public:
-    Fukurou(string name, int hp, int atk, int def,
-            int speed, int energy, int doriki);
-
-    int attack(Character* target, BattleContext& context);
-    int specialSkill(Character* target, BattleContext& context);
-    void endTurn(BattleContext& context);
+    Fukurou(string name, int hp, int atk, int def, int speed, int energy, int doriki);
+    int attack(Character* target, BattleContext& context) override;
+    int specialSkill(Character* target, BattleContext& context) override;
+    void endTurn(BattleContext& context) override;
 };
 
-/*
- * BattleContext
- */
 class BattleContext {
 public:
     int turnCount;
@@ -269,14 +224,10 @@ public:
     bool battleEnded;
     string resultCode;
 
-public:
     BattleContext();
     void nextTurn();
 };
 
-/*
- * Building
- */
 class Building {
 protected:
     string name;
@@ -295,61 +246,51 @@ public:
     virtual void onDestroyed(BattleContext& context);
 
     virtual string str () const;
+    string getName() const { return name; }
+    int getHP() const { return hp; }
+    int getMaxHP() const { return maxHP; }
+    void setHP(int h) { hp = h; if(hp <= 0) destroyed = true; }
+    void setDestroyed(bool d) { destroyed = d; }
 };
 
-/*
- * Building subclasses
- */
 class MainGate : public Building {
 public:
     MainGate(string name, int hp);
-
-    void applyEffect(BattleContext& context);
-    void onDestroyed(BattleContext& context);
+    void applyEffect(BattleContext& context) override;
+    void onDestroyed(BattleContext& context) override;
 };
 
 class Courthouse : public Building {
 public:
     Courthouse(string name, int hp);
-
-    void applyEffect(BattleContext& context);
-    void onDestroyed(BattleContext& context);
+    void applyEffect(BattleContext& context) override;
+    void onDestroyed(BattleContext& context) override;
 };
 
 class TowerOfJustice : public Building {
 public:
     TowerOfJustice(string name, int hp);
-
-    void applyEffect(BattleContext& context);
+    void applyEffect(BattleContext& context) override;
 };
 
 class BridgeOfHesitation : public Building {
 public:
     BridgeOfHesitation(string name, int hp);
-
-    void applyEffect(BattleContext& context);
+    void applyEffect(BattleContext& context) override;
 };
 
 class BusterCallShip : public Building {
 public:
     BusterCallShip(string name, int hp);
-
-    void applyEffect(BattleContext& context);
-    void onDestroyed(BattleContext& context);
+    void applyEffect(BattleContext& context) override;
+    void onDestroyed(BattleContext& context) override;
 };
 
-/*
- * TurnNode to create Linked List turn order
- */
-struct TurnNode
-{
+struct TurnNode {
     Character* data;
     TurnNode* next;
 };
 
-/*
- * EniesLobbyBattle
- */
 class EniesLobbyBattle {
 private:
     Character** strawHats;
@@ -364,19 +305,23 @@ private:
     TurnNode* turnOrder;
     BattleContext context;
     int maxTurns;
+    
+    Building* findBuilding(string name) {
+        for(int i = 0; i < buildingCount; i++) {
+            if(buildings[i]->getName() == name) return buildings[i];
+        }
+        return nullptr;
+    }
 
 public:
     EniesLobbyBattle(const string& filename);
     ~EniesLobbyBattle();
 
     void loadFromFile(const string& filename);
-
     void addStrawHat(Character* character);
     void addCP9Agent(Character* character);
     void addBuilding(Building* building);
-
     void buildTurnOrder();
-
     void runBattle();
     void processTurn(Character* character);
     void processBuildings();
