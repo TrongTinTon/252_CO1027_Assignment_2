@@ -8,7 +8,8 @@ class Building;
 class Character;
 struct TurnNode;
 
-class Character {
+class Character
+{
 protected:
     string name;
     int hp;
@@ -27,13 +28,13 @@ public:
     Character(string name, int hp, int atk, int def, int speed, int energy);
     virtual ~Character();
 
-    virtual int attack(Character* target, BattleContext& context) = 0;
-    virtual int specialSkill(Character* target, BattleContext& context) = 0;
+    virtual int attack(Character *target, BattleContext &context) = 0;
+    virtual int specialSkill(Character *target, BattleContext &context) = 0;
 
-    virtual int attack(Building* target, BattleContext& context);
-    virtual int specialSkill(Building* target, BattleContext& context);
+    virtual int attack(Building *target, BattleContext &context);
+    virtual int specialSkill(Building *target, BattleContext &context);
 
-    virtual void endTurn(BattleContext& context);
+    virtual void endTurn(BattleContext &context);
 
     void receiveDamage(int damage);
     bool isAlive() const;
@@ -42,7 +43,12 @@ public:
     int getEnergy() const;
 
     int getMaxHP() const { return maxHp; }
-    void setHP(int h) { hp = h; if(hp <= 0) alive = false; }
+    void setHP(int h)
+    {
+        hp = h;
+        if (hp <= 0)
+            alive = false;
+    }
     void setAlive(bool a) { alive = a; }
     void setEnergy(int e) { energy = e; }
     int getAtk() const { return atk; }
@@ -58,7 +64,8 @@ public:
     virtual string str() const = 0;
 };
 
-class StrawHat : public Character {
+class StrawHat : public Character
+{
 protected:
     long long bounty;
 
@@ -71,77 +78,85 @@ public:
     virtual string str() const;
 };
 
-class Luffy : public StrawHat {
+class Luffy : public StrawHat
+{
 public:
     Luffy(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    int attack(Building* target, BattleContext& context) override;
-    int specialSkill(Building* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    int attack(Building *target, BattleContext &context) override;
+    int specialSkill(Building *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class Zoro : public StrawHat {
+class Zoro : public StrawHat
+{
 public:
     Zoro(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    int attack(Building* target, BattleContext& context) override;
-    int specialSkill(Building* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    int attack(Building *target, BattleContext &context) override;
+    int specialSkill(Building *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class Sanji : public StrawHat {
+class Sanji : public StrawHat
+{
 public:
     Sanji(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    int attack(Building* target, BattleContext& context) override;
-    int specialSkill(Building* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    int attack(Building *target, BattleContext &context) override;
+    int specialSkill(Building *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class Nami : public StrawHat {
+class Nami : public StrawHat
+{
 public:
     Nami(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    int attack(Building* target, BattleContext& context) override;
-    int specialSkill(Building* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    int attack(Building *target, BattleContext &context) override;
+    int specialSkill(Building *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class Chopper : public StrawHat {
+class Chopper : public StrawHat
+{
 public:
     Chopper(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    int attack(Building* target, BattleContext& context) override;
-    int specialSkill(Building* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    int attack(Building *target, BattleContext &context) override;
+    int specialSkill(Building *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class Usopp : public StrawHat {
+class Usopp : public StrawHat
+{
 public:
     Usopp(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    int attack(Building* target, BattleContext& context) override;
-    int specialSkill(Building* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    int attack(Building *target, BattleContext &context) override;
+    int specialSkill(Building *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class Franky : public StrawHat {
+class Franky : public StrawHat
+{
 public:
     Franky(string name, int hp, int atk, int def, int speed, int energy, long long bounty);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    int attack(Building* target, BattleContext& context) override;
-    int specialSkill(Building* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    int attack(Building *target, BattleContext &context) override;
+    int specialSkill(Building *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class CP9Agent : public Character {
+class CP9Agent : public Character
+{
 protected:
     int doriki;
 
@@ -154,63 +169,71 @@ public:
     virtual string str() const;
 };
 
-class Lucci : public CP9Agent {
+class Lucci : public CP9Agent
+{
 public:
     Lucci(string name, int hp, int atk, int def, int speed, int energy, int doriki);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class Kaku : public CP9Agent {
+class Kaku : public CP9Agent
+{
 public:
     Kaku(string name, int hp, int atk, int def, int speed, int energy, int doriki);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class Jabra : public CP9Agent {
+class Jabra : public CP9Agent
+{
 public:
     Jabra(string name, int hp, int atk, int def, int speed, int energy, int doriki);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class Blueno : public CP9Agent {
+class Blueno : public CP9Agent
+{
 public:
     Blueno(string name, int hp, int atk, int def, int speed, int energy, int doriki);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class Kalifa : public CP9Agent {
+class Kalifa : public CP9Agent
+{
 public:
     Kalifa(string name, int hp, int atk, int def, int speed, int energy, int doriki);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class Kumadori : public CP9Agent {
+class Kumadori : public CP9Agent
+{
 public:
     Kumadori(string name, int hp, int atk, int def, int speed, int energy, int doriki);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class Fukurou : public CP9Agent {
+class Fukurou : public CP9Agent
+{
 public:
     Fukurou(string name, int hp, int atk, int def, int speed, int energy, int doriki);
-    int attack(Character* target, BattleContext& context) override;
-    int specialSkill(Character* target, BattleContext& context) override;
-    void endTurn(BattleContext& context) override;
+    int attack(Character *target, BattleContext &context) override;
+    int specialSkill(Character *target, BattleContext &context) override;
+    void endTurn(BattleContext &context) override;
 };
 
-class BattleContext {
+class BattleContext
+{
 public:
     int turnCount;
     int morale;
@@ -228,7 +251,8 @@ public:
     void nextTurn();
 };
 
-class Building {
+class Building
+{
 protected:
     string name;
     int hp;
@@ -242,88 +266,103 @@ public:
     void receiveDamage(int damage);
     bool isDestroyed() const;
 
-    virtual void applyEffect(BattleContext& context) = 0;
-    virtual void onDestroyed(BattleContext& context);
+    virtual void applyEffect(BattleContext &context) = 0;
+    virtual void onDestroyed(BattleContext &context);
 
-    virtual string str () const;
+    virtual string str() const;
     string getName() const { return name; }
     int getHP() const { return hp; }
     int getMaxHP() const { return maxHP; }
-    void setHP(int h) { hp = h; if(hp <= 0) destroyed = true; }
+    void setHP(int h)
+    {
+        hp = h;
+        if (hp <= 0)
+            destroyed = true;
+    }
     void setDestroyed(bool d) { destroyed = d; }
 };
 
-class MainGate : public Building {
+class MainGate : public Building
+{
 public:
     MainGate(string name, int hp);
-    void applyEffect(BattleContext& context) override;
-    void onDestroyed(BattleContext& context) override;
+    void applyEffect(BattleContext &context) override;
+    void onDestroyed(BattleContext &context) override;
 };
 
-class Courthouse : public Building {
+class Courthouse : public Building
+{
 public:
     Courthouse(string name, int hp);
-    void applyEffect(BattleContext& context) override;
-    void onDestroyed(BattleContext& context) override;
+    void applyEffect(BattleContext &context) override;
+    void onDestroyed(BattleContext &context) override;
 };
 
-class TowerOfJustice : public Building {
+class TowerOfJustice : public Building
+{
 public:
     TowerOfJustice(string name, int hp);
-    void applyEffect(BattleContext& context) override;
+    void applyEffect(BattleContext &context) override;
 };
 
-class BridgeOfHesitation : public Building {
+class BridgeOfHesitation : public Building
+{
 public:
     BridgeOfHesitation(string name, int hp);
-    void applyEffect(BattleContext& context) override;
+    void applyEffect(BattleContext &context) override;
 };
 
-class BusterCallShip : public Building {
+class BusterCallShip : public Building
+{
 public:
     BusterCallShip(string name, int hp);
-    void applyEffect(BattleContext& context) override;
-    void onDestroyed(BattleContext& context) override;
+    void applyEffect(BattleContext &context) override;
+    void onDestroyed(BattleContext &context) override;
 };
 
-struct TurnNode {
-    Character* data;
-    TurnNode* next;
+struct TurnNode
+{
+    Character *data;
+    TurnNode *next;
 };
 
-class EniesLobbyBattle {
+class EniesLobbyBattle
+{
 private:
-    Character** strawHats;
+    Character **strawHats;
     int strawHatCount;
 
-    Character** cp9Agents;
+    Character **cp9Agents;
     int cp9Count;
 
-    Building** buildings;
+    Building **buildings;
     int buildingCount;
 
-    TurnNode* turnOrder;
+    TurnNode *turnOrder;
     BattleContext context;
     int maxTurns;
-    
-    Building* findBuilding(string name) {
-        for(int i = 0; i < buildingCount; i++) {
-            if(buildings[i]->getName() == name) return buildings[i];
+
+    Building *findBuilding(string name)
+    {
+        for (int i = 0; i < buildingCount; i++)
+        {
+            if (buildings[i]->getName() == name)
+                return buildings[i];
         }
         return nullptr;
     }
 
 public:
-    EniesLobbyBattle(const string& filename);
+    EniesLobbyBattle(const string &filename);
     ~EniesLobbyBattle();
 
-    void loadFromFile(const string& filename);
-    void addStrawHat(Character* character);
-    void addCP9Agent(Character* character);
-    void addBuilding(Building* building);
+    void loadFromFile(const string &filename);
+    void addStrawHat(Character *character);
+    void addCP9Agent(Character *character);
+    void addBuilding(Building *building);
     void buildTurnOrder();
     void runBattle();
-    void processTurn(Character* character);
+    void processTurn(Character *character);
     void processBuildings();
     void checkEndCondition();
 
