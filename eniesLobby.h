@@ -23,6 +23,7 @@ protected:
 public:
     bool killedThisTurn;
     bool isLowestHP_Enemies;
+    bool actedThisTurn;
 
     Character();
     Character(string name, int hp, int atk, int def, int speed, int energy);

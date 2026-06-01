@@ -201,18 +201,34 @@ Character::Character()
     alive = false;
     killedThisTurn = false;
     isLowestHP_Enemies = false;
+    actedThisTurn = false;
 }
 
 Character::Character(string name, int hp, int atk, int def, int speed, int energy)
 {
     this->name = name;
-    this->hp = hp;
+
     this->maxHp = hp;
+    if (this->maxHp < 0)
+        this->maxHp = 0;
+
+    this->hp = hp;
+    if (this->hp < 0)
+        this->hp = 0;
+    if (this->hp > this->maxHp)
+        this->hp = this->maxHp;
+
     this->atk = atk;
     this->def = def;
     this->speed = speed;
+
     this->energy = energy;
-    this->alive = (hp > 0);
+    if (this->energy < 0)
+        this->energy = 0;
+    if (this->energy > 100)
+        this->energy = 100;
+
+    this->alive = (this->hp > 0);
     this->killedThisTurn = false;
     this->isLowestHP_Enemies = false;
 }
@@ -389,6 +405,8 @@ void Luffy::endTurn(BattleContext &context)
         context.morale += 3;
     if (killedThisTurn)
         energy += 5;
+    killedThisTurn = false;
+    actedThisTurn = false;
     clampContext(context);
     clampCharacter(this);
 }
@@ -450,6 +468,8 @@ void Zoro::endTurn(BattleContext &context)
         context.morale += 6;
         atk += ceilPercentValue(atk, 5);
     }
+    killedThisTurn = false;
+    actedThisTurn = false;
     clampContext(context);
     clampCharacter(this);
 }
@@ -504,6 +524,8 @@ void Sanji::endTurn(BattleContext &context)
         context.morale += 8;
         atk += ceilPercentValue(atk, 10);
     }
+    killedThisTurn = false;
+    actedThisTurn = false;
     clampContext(context);
     clampCharacter(this);
 }
@@ -560,6 +582,8 @@ void Nami::endTurn(BattleContext &context)
 {
     if (killedThisTurn)
         energy += 6;
+    killedThisTurn = false;
+    actedThisTurn = false;
     clampCharacter(this);
 }
 
@@ -608,6 +632,7 @@ Usopp::Usopp(string name, int hp, int atk, int def, int speed, int energy, long 
 
 int Usopp::attack(Character *target, BattleContext &context)
 {
+    actedThisTurn = true;
     int dmg = atk;
     if (target && target->getSpeed() < 50)
         dmg = ceilPercentValue(dmg, 120);
@@ -618,6 +643,7 @@ int Usopp::specialSkill(Character *target, BattleContext &context)
 {
     if (energy < 16)
         return 0;
+    actedThisTurn = true;
     energy -= 16;
 
     int dmg = ceilPercentValue(atk, 80);
@@ -633,6 +659,7 @@ int Usopp::specialSkill(Character *target, BattleContext &context)
 
 int Usopp::attack(Building *target, BattleContext &context)
 {
+    actedThisTurn = true;
     return applyDamageBuilding(this, target, ceilPercentValue(atk, 50), context);
 }
 
@@ -640,6 +667,7 @@ int Usopp::specialSkill(Building *target, BattleContext &context)
 {
     if (energy < 16)
         return 0;
+    actedThisTurn = true;
     energy -= 16;
 
     int dmg = ceilPercentValue(atk, 80);
@@ -650,7 +678,12 @@ int Usopp::specialSkill(Building *target, BattleContext &context)
 
 void Usopp::endTurn(BattleContext &context)
 {
-    context.morale += 10;
+    if (actedThisTurn)
+    {
+        context.morale += 10;
+    }
+    killedThisTurn = false;
+    actedThisTurn = false;
     clampContext(context);
 }
 
@@ -952,9 +985,18 @@ void Fukurou::endTurn(BattleContext &context) {}
 Building::Building(string name, int hp)
 {
     this->name = name;
-    this->hp = hp;
+
     this->maxHP = hp;
-    this->destroyed = (hp <= 0);
+    if (this->maxHP < 0)
+        this->maxHP = 0;
+
+    this->hp = hp;
+    if (this->hp < 0)
+        this->hp = 0;
+    if (this->hp > this->maxHP)
+        this->hp = this->maxHP;
+
+    this->destroyed = (this->hp <= 0);
 }
 
 Building::~Building() {}
@@ -1296,6 +1338,7 @@ void EniesLobbyBattle::processTurn(Character *character)
         return;
 
     character->killedThisTurn = false;
+    character->actedThisTurn = false;
     Character *targetCharacter = nullptr;
     Building *targetBuilding = nullptr;
     bool isHealing = false;
